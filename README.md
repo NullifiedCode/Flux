@@ -1,4 +1,5 @@
 <h1 align="left">What is Flux?</h1>
+<img src="https://github.com/user-attachments/assets/e585cd3f-4281-4f28-9c99-2912e7293aad" width="64">
 
 ###
 
