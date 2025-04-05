@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -102,10 +103,11 @@ class Program
 
     private static void LoadConfiguration()
     {
-        if (!File.Exists("flux.conf"))
-            File.WriteAllText("flux.conf", JsonConvert.SerializeObject(new Config()));
+        var dir = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+        if (!File.Exists(dir + "/flux.conf"))
+            File.WriteAllText(dir + "/flux.conf", JsonConvert.SerializeObject(new Config()));
 
-        var data = File.ReadAllText("flux.conf");
+        var data = File.ReadAllText(dir + "/flux.conf");
 
         var oldConfig = JsonConvert.DeserializeObject<Config>(data);
 
@@ -123,7 +125,7 @@ class Program
 
         config.Server.HideConsole = oldConfig?.Server.HideConsole ?? config.Server.HideConsole;
 
-        File.WriteAllText("flux.conf", JsonConvert.SerializeObject(config));
+        File.WriteAllText(dir + "/flux.conf", JsonConvert.SerializeObject(config));
 
         Console.WriteLine("Configuration loaded successfully.");
     }

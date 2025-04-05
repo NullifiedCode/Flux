@@ -18,18 +18,21 @@ class Program
         if(config == null)
         {
             Console.WriteLine("Config is somehow null, I dont even know how you did this.");
+            Console.Read();
             return;
         }
 
         if (!IsServerAvailable(config.Server.IpAddress, config.Server.Port))
         {
             Console.WriteLine($"Server {config.Server.IpAddress}:{config.Server.Port} is not reachable.");
+            Console.Read();
             return;
         }
 
         if (args.Length == 0)
         {
             Console.WriteLine("Please drag and drop a file onto this application.");
+            Console.Read();
             return;
         }
 
@@ -40,10 +43,11 @@ class Program
 
     private static void LoadConfiguration()
     {
-        if (!File.Exists("flux.conf"))
-            File.WriteAllText("flux.conf", JsonConvert.SerializeObject(new Config()));
+        var dir = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) ;
+        if (!File.Exists(dir + "/flux.conf"))
+            File.WriteAllText(dir + "/flux.conf", JsonConvert.SerializeObject(new Config()));
 
-        var data = File.ReadAllText("flux.conf");
+        var data = File.ReadAllText(dir + "/flux.conf");
 
         var oldConfig = JsonConvert.DeserializeObject<Config>(data);
 
@@ -55,7 +59,7 @@ class Program
 
         config.Server.Port = oldConfig?.Server.Port ?? config.Server.Port;
 
-        File.WriteAllText("flux.conf", JsonConvert.SerializeObject(config));
+        File.WriteAllText(dir + "/flux.conf", JsonConvert.SerializeObject(config));
 
         Console.WriteLine("Configuration loaded successfully.");
     }
