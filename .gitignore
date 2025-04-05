@@ -1,0 +1,13 @@
+packages/
+Flux/obj/Release/
+Flux/bin/Release/
+Flux/obj/Debug/
+Flux/bin/Debug/
+Flux/obj/
+FluxServer/obj/Release/
+FluxServer/bin/Release/
+FluxServer/obj/Debug/
+FluxServer/bin/Debug/
+FluxServer/obj/
+.vs
+
